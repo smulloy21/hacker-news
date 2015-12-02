@@ -11,7 +11,7 @@
 
   <body ng-app="hackerNews">
 
-    <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
+    <nav class="navbar navbar-default navbar-right" ng-controller="NavCtrl">
       <ul class="nav navbar-nav">
         <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
         <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
@@ -41,13 +41,16 @@
         <span ng-hide="post.link">
           {{post.title}}
         </span>
+        <span ng-show="post.author">
+          | posted by <a>{{post.author}}</a>
+        </span>
         <span>
           | <a href="#/posts/{{post._id}}">Comments</a>
         </span>
       </span>
     </div>
 
-    <form ng-submit="addPost()"
+    <form ng-show="isLoggedIn()" ng-submit="addPost()"
       style="margin-top:30px;">
       <h3>Add a new post</h3>
 
@@ -65,6 +68,10 @@
       </div>
       <button type="submit" class="btn btn-primary">Post</button>
     </form>
+
+    <div ng-hide="isLoggedIn()">
+      <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> to add a post.</h3>
+    </div>
   </script>
 
   <script type="text/ng-template" id="/posts.html">
@@ -88,7 +95,7 @@
       </span>
     </div>
 
-    <form ng-submit="addComment()"
+    <form ng-show="isLoggedIn()" ng-submit="addComment()"
       style="margin-top:30px;">
       <h3>Add a comment</h3>
 
@@ -100,6 +107,9 @@
       </div>
       <button type="submit" class="btn btn-primary">Post</button>
     </form>
+    <div ng-hide="isLoggedIn()">
+      <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> to comment.</h3>
+    </div>
   </script>
 
   <script type="text/ng-template" id="/register.html">
